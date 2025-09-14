@@ -62,3 +62,51 @@
 > new_value: 'o'
 > 
 > "Vader said: No, I am your father!" -> "Vader soid: No, I am your fother!"
+
+### Структура проекта
+
+```
+tasks/Laboratory_1/
+├── CMakeLists.txt
+├── main.cpp
+├── Materials.md
+├── README.md
+├── include/
+│   └── replace.h
+├── src/
+│   └── replace.cpp
+└── test/
+    └── test1.cpp
+```
+
+## Сборка и запуск проекта
+
+**Сборка:**
+
+```bash
+# Создание директории для сборки
+mkdir build
+cd build
+
+# Конфигурация проекта
+cmake ..
+
+# Сборка проекта
+cmake --build .
+```
+
+**Запуск:**
+
+```bash
+./Laboratory_1.exe
+```
+
+## Запуск тестов:
+
+```bash
+# Из директории build
+./tests
+
+# Или через CTest
+ctest --verbose
+```
