@@ -13,6 +13,6 @@ int main() {
     std::cin >> old_value;
     std::cout << "new_value: ";
     std::cin >> new_value;
-    std::cout << replacechar(str, n, old_value, new_value) << std::endl;
+    std::cout << str << " -> " << replacechar(str, n, old_value, new_value) << std::endl;
     return 0;
 }
