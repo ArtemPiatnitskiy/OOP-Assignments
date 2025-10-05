@@ -17,7 +17,6 @@ int main() {
     std::cout << big1.to_string() << " + " << big2.to_string() << " = "
               << big1.add(big2).to_string() << '\n';
 
-    // сравнение
     std::cout << "compare(7,1) = " << a.compare(b) << '\n';
     std::cout << "equals(7,7) = " << Octal("7").equals(a) << '\n';
 
