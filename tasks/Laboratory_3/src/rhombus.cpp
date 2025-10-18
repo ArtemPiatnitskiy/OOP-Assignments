@@ -5,10 +5,29 @@
 // Конструктор с параметрами описания и четырьмя точками.
 Rhombus::Rhombus(const Point& p1, const Point& p2, const Point& p3, const Point& p4, std::string description)
     : Figure(description) {
-    points[0] = p1;
-    points[1] = p2;
-    points[2] = p3;
-    points[3] = p4;
+        // Координаты векторов сторон ромба.
+        Point AB = Point(p1.get_x() - p2.get_x(), p1.get_y() - p2.get_y());
+        Point BC = Point(p2.get_x() - p3.get_x(), p2.get_y() - p3.get_y());
+        Point CD = Point(p3.get_x() - p4.get_x(), p3.get_y() - p4.get_y());
+        Point DA = Point(p4.get_x() - p1.get_x(), p4.get_y() - p1.get_y());
+        // Проверка, что все стороны равны.
+        if (distance(p1, p2) != distance(p2, p3) ||
+            distance(p2, p3) != distance(p3, p4) ||
+            distance(p3, p4) != distance(p4, p1)) {
+            throw std::invalid_argument("Invalid rhombus points: all sides must be of equal length.");
+        }
+        // Проверка, что соседние стороны параллельны. Если векторное произведение равно нулю, то векторы параллельны.
+        else if (!((AB.get_x() * BC.get_y() - AB.get_y() * BC.get_x()) > 1e-10 &&
+                   (BC.get_x() * CD.get_y() - BC.get_y() * CD.get_x()) > 1e-10 &&
+                   (CD.get_x() * DA.get_y() - CD.get_y() * DA.get_x()) > 1e-10 &&
+                   (DA.get_x() * AB.get_y() - DA.get_y() * AB.get_x()) > 1e-10)) {
+            throw std::invalid_argument("Invalid rhombus points: adjacent sides must be non-parallel.");
+        }
+        // Если проверки пройдены, сохраняем точки.
+        points[0] = p1;
+        points[1] = p2;
+        points[2] = p3;
+        points[3] = p4;
 }
 
 // Перегрузка операторов = копирования и перемещения.

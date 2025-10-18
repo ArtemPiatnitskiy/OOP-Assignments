@@ -4,6 +4,9 @@
 // Конструктор с параметрами описания и двумя точками противоположных углов.
 Rectangle::Rectangle(const Point& p1, const Point& p2, std::string description)
     : Figure(description) {
+        if (p1.get_x() == p2.get_x() || p1.get_y() == p2.get_y()) {
+            throw std::invalid_argument("Invalid rectangle points: points must not be aligned vertically or horizontally.");
+        }
     points[0] = p1;
     points[1] = Point(p2.get_x(), p1.get_y());
     points[2] = p2;
