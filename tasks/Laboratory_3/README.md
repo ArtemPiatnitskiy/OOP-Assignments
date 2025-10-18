@@ -64,15 +64,31 @@
 tasks/Laboratory_3/
 ├── CMakeLists.txt
 ├── main.cpp
-├── Materials.md
+├── materials.md
 ├── README.md
 ├── include/
-│   └── Octal.h
+│   ├── arrayoffigures.h
+│   ├── figure.h
+│   ├── point.h
+│   ├── rectangle.h
+│   ├── rhombus.h
+│   └── trapezoid.h
 ├── src/
-│   └── Octal.cpp
-└── test/
-    └── test_lr2.cpp
+│   ├── arrayoffigures.cpp
+│   ├── figure.cpp
+│   ├── point.cpp
+│   ├── rectangle.cpp
+│   ├── rhombus.cpp
+│   └── trapezoid.cpp
+└── tests/
+    ├── test_arrayoffigures.cpp
+    ├── test_point.cpp
+    ├── test_rectangle.cpp
+    ├── test_rhombus.cpp
+    └── test_trapezoid.cpp
 ```
+
+
 
 ## Сборка и запуск проекта
 
