@@ -19,7 +19,7 @@ class Trapezoid : public Figure {
         // Перегрузка оператора сравниения ==.
         bool operator==(const Trapezoid& other) const;
         // Перегрузка оператора сравнения <=>
-        auto operator<=>(const Trapezoid& other) const;
+        std::partial_ordering operator<=>(const Trapezoid& other) const;
 
         // Переопределение виртуальных методов базового класса.
         Point geometric_center() const override;

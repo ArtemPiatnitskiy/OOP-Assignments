@@ -1,5 +1,6 @@
 #include "../include/rhombus.h"
 #include "../include/point.h"
+#include <compare>
 
 // Конструктор с параметрами описания и четырьмя точками.
 Rhombus::Rhombus(const Point& p1, const Point& p2, const Point& p3, const Point& p4, std::string description)
@@ -40,7 +41,7 @@ bool Rhombus::operator==(const Rhombus& other) const {
 }
 
 // Перегрузка оператора сравнения <=>
-auto Rhombus::operator<=>(const Rhombus& other) const {
+std::partial_ordering Rhombus::operator<=>(const Rhombus& other) const {
     return this->square() <=> other.square();
 }
 

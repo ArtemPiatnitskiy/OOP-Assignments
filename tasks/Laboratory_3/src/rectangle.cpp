@@ -40,7 +40,7 @@ bool Rectangle::operator==(const Rectangle& other) const {
 }
 
 // Перегрузка оператора сравнения <=>
-auto Rectangle::operator<=>(const Rectangle& other) const {
+std::partial_ordering Rectangle::operator<=>(const Rectangle& other) const {
     return this->square() <=> other.square();
 }
 

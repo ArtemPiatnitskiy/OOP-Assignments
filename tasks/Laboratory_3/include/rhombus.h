@@ -19,7 +19,7 @@ class Rhombus : public Figure {
         // Перегрузка оператора сравниения ==.
         bool operator==(const Rhombus& other) const;
         // Перегрузка оператора сравнения <=>
-        auto operator<=>(const Rhombus& other) const;
+        std::partial_ordering operator<=>(const Rhombus& other) const;
 
         // Переопределение виртуальных методов базового класса.
         Point geometric_center() const override;

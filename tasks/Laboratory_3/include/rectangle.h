@@ -1,4 +1,5 @@
 #pragma once
+#include <compare>
 #include <string>
 #include "point.h"
 #include "figure.h"
@@ -20,7 +21,7 @@ class Rectangle : public Figure {
         // Перегрузка оператора сравниния ==.
         bool operator==(const Rectangle& other) const;
         // Перегрузка оператора сравнения <=>
-        auto operator<=>(const Rectangle& other) const;
+        std::partial_ordering operator<=>(const Rectangle& other) const;
 
         // Переопределение виртуальных методов базового класса.
         Point geometric_center() const override;
