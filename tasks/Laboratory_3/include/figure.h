@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "point.h"
 #include <string_view>
 #include <string>
 #include <ostream>
@@ -21,7 +22,7 @@ class Figure {
         // Конструктор по умолчанию.
         Figure() = default;
         // Конструктор с параметром описания фигуры.
-        Figure (std::string_view discription);
+        Figure(std::string_view discription);
 
         // Функции для реализации логики операторов ввода/вывода в наследниках.
 
@@ -34,7 +35,7 @@ class Figure {
         virtual ~Figure() = default;
 
         // Функция для нахождения геометрического центра фигуры.
-        virtual double geometric_center() const = 0;
+        virtual Point geometric_center() const = 0;
         // Функция для нахождения площади фигуры.
         virtual double square() const = 0;
         // Функция для нахождения периметра фигуры.
@@ -42,7 +43,7 @@ class Figure {
 
         virtual Figure* clone() const = 0;
 
-        operator double() const;
+        virtual operator double() const = 0;
 
     
     

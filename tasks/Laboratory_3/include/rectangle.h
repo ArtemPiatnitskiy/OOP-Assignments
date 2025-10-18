@@ -7,9 +7,9 @@ class Rectangle : public Figure {
     public:
         // Конструктор по умолчанию.
         Rectangle() : Figure("rectangle") {};
-        
+
         // Конструктор точками противоположных углов.
-        Rectangle(std::string description, const Point& p1, const Point& p2, std::string discription = "rectangle");
+        Rectangle(const Point& p1, const Point& p2, std::string description = "rectangle");
 
         // Перегрузка операторов = копирования и перемещения.
         // Конструктор копирования.
@@ -23,14 +23,14 @@ class Rectangle : public Figure {
         auto operator<=>(const Rectangle& other) const;
 
         // Переопределение виртуальных методов базового класса.
-        double geometric_center() const override;
+        Point geometric_center() const override;
         double square() const override;
         double perimeter() const override;
 
         // Функция для нахождения площади фигуры через перегрузку оператора double().
         // Возвращает площадь фигуры.
         // Мы не используем explicit здесь, чтобы позволить неявное преобразование к double.
-        operator double() const;
+        operator double() const override;
 
         // Перегрузка операторов ввода/вывода.
         void print(std::ostream& os) const override;

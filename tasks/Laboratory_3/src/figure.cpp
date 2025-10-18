@@ -3,6 +3,7 @@
 #include <iostream>
 
 std::ostream& operator<<(std::ostream& os, const Figure& figure) {
+    os << figure.description << ":\n";
     figure.print(os);
     return os;
 }

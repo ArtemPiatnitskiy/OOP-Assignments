@@ -147,7 +147,9 @@ double ArrayOfFigures::total_square() const {
     double total = 0.0;
     for (size_t i = 0; i < size; ++i) {
         if (figures[i]) {
-            total += *figures[i];
+            // Используется неявное преобразование к double через перегруженный оператор.
+            // total += *figures[i]; Так тодже работает, но ниже будет быолее явно, с помощью функции square().
+            total += figures[i]->square();
         }
     }
     return total;
