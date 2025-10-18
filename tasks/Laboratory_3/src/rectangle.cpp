@@ -1,5 +1,6 @@
 #include "../include/rectangle.h"
 #include "../include/point.h"
+#include <stdexcept>
 
 // Конструктор с параметрами описания и двумя точками противоположных углов.
 Rectangle::Rectangle(const Point& p1, const Point& p2, std::string description)
@@ -15,6 +16,12 @@ Rectangle::Rectangle(const Point& p1, const Point& p2, std::string description)
 
 // Перегрузка операторов = копирования и перемещения.
 // Конструктор копирования.
+Rectangle::Rectangle(const Rectangle& other) {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = other.points[i];
+    }
+}
+// Перегрузка копирования.
 Rectangle& Rectangle::operator=(const Rectangle& other) {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {
@@ -25,6 +32,12 @@ Rectangle& Rectangle::operator=(const Rectangle& other) {
 }
 
 // Конструктор перемещения.
+Rectangle::Rectangle(Rectangle&& other) noexcept {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = std::move(other.points[i]);
+    }
+}
+// Перегрузка перемещения.
 Rectangle& Rectangle::operator=(Rectangle&& other) noexcept {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {

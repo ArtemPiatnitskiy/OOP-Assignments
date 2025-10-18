@@ -1,6 +1,8 @@
 #include "../include/rhombus.h"
 #include "../include/point.h"
 #include <compare>
+#include <cmath>
+#include <stdexcept>
 
 // Конструктор с параметрами описания и четырьмя точками.
 Rhombus::Rhombus(const Point& p1, const Point& p2, const Point& p3, const Point& p4, std::string description)
@@ -16,12 +18,19 @@ Rhombus::Rhombus(const Point& p1, const Point& p2, const Point& p3, const Point&
             distance(p3, p4) != distance(p4, p1)) {
             throw std::invalid_argument("Invalid rhombus points: all sides must be of equal length.");
         }
-        // Проверка, что соседние стороны параллельны. Если векторное произведение равно нулю, то векторы параллельны.
+        // Проверка, что соседние стороны параллельны. Если косинус угла между векторами равен 1, то векторы параллельны. Вариант с косинусом:
+        /*
+        else if (!(((fabs(AB.get_x() * CD.get_x() + AB.get_y() * CD.get_y()) / (distance(p1, p2) * distance(p3, p4))) - 1 < 1e-9) &&
+                 ((fabs(DA.get_x() * BC.get_x() + DA.get_y() * BC.get_y()) / (distance(p2, p3) * distance(p4, p1))) - 1 < 1e-9))) {
+            throw std::invalid_argument("Invalid rhombus points: adjacent sides must be non-parallel.");
+        }
+        */
+        // Через векторное произведение для проверки порядка точек и непараллельности соседних сторон:
         else if (!((AB.get_x() * BC.get_y() - AB.get_y() * BC.get_x()) > 1e-10 &&
                    (BC.get_x() * CD.get_y() - BC.get_y() * CD.get_x()) > 1e-10 &&
                    (CD.get_x() * DA.get_y() - CD.get_y() * DA.get_x()) > 1e-10 &&
                    (DA.get_x() * AB.get_y() - DA.get_y() * AB.get_x()) > 1e-10)) {
-            throw std::invalid_argument("Invalid rhombus points: adjacent sides must be non-parallel.");
+            throw std::invalid_argument("Invalid rhombus points: adjacent sides must be non-parallel and ordered correctly.");
         }
         // Если проверки пройдены, сохраняем точки.
         points[0] = p1;
@@ -32,6 +41,12 @@ Rhombus::Rhombus(const Point& p1, const Point& p2, const Point& p3, const Point&
 
 // Перегрузка операторов = копирования и перемещения.
 // Конструктор копирования.
+Rhombus::Rhombus(const Rhombus& other) {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = other.points[i];
+    }
+}
+// Перегрузка копирования.
 Rhombus& Rhombus::operator=(const Rhombus& other) {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {
@@ -42,6 +57,12 @@ Rhombus& Rhombus::operator=(const Rhombus& other) {
 }
 
 // Конструктор перемещения.
+Rhombus::Rhombus(Rhombus&& other) noexcept {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = std::move(other.points[i]);
+    }
+}
+// Перегрузка перемещения.
 Rhombus& Rhombus::operator=(Rhombus&& other) noexcept {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {

@@ -12,8 +12,10 @@ class Trapezoid : public Figure {
 
         // Перегрузка операторов = копирования и перемещения.
         // Конструктор копирования.
+        Trapezoid(const Trapezoid& other);
         Trapezoid& operator=(const Trapezoid& other);
         // Конструктор перемещения.
+        Trapezoid(Trapezoid&& other) noexcept;
         Trapezoid& operator=(Trapezoid&& other) noexcept;
 
         // Перегрузка оператора сравниения ==.

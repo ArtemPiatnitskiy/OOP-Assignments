@@ -12,8 +12,10 @@ class Rhombus : public Figure {
 
         // Перегрузка операторов = копирования и перемещения.
         // Конструктор копирования.
+        Rhombus(const Rhombus& other);
         Rhombus& operator=(const Rhombus& other);
         // Конструктор перемещения.
+        Rhombus(Rhombus&& other) noexcept;
         Rhombus& operator=(Rhombus&& other) noexcept;
 
         // Перегрузка оператора сравниения ==.

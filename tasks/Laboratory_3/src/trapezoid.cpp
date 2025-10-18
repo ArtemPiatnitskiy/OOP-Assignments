@@ -1,6 +1,7 @@
 #include "../include/trapezoid.h"
 #include "../include/point.h"
 #include <cmath>
+#include <stdexcept>
 #include <iostream>
 
 // Конструктор с параметрами описания и четырьмя точками.
@@ -25,6 +26,12 @@ Trapezoid::Trapezoid(const Point& p1, const Point& p2, const Point& p3, const Po
 
 // Перегрузка операторов = копирования и перемещения.
 // Конструктор копирования.
+Trapezoid::Trapezoid(const Trapezoid& other) {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = other.points[i];
+    }
+}
+// Перегрузка копирования.
 Trapezoid& Trapezoid::operator=(const Trapezoid& other) {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {
@@ -35,6 +42,12 @@ Trapezoid& Trapezoid::operator=(const Trapezoid& other) {
 }
 
 // Конструктор перемещения.
+Trapezoid::Trapezoid(Trapezoid&& other) noexcept {
+    for (int i = 0; i < 4; ++i) {
+        points[i] = std::move(other.points[i]);
+    }
+}
+// Перегрузка перемещения.
 Trapezoid& Trapezoid::operator=(Trapezoid&& other) noexcept {
     if (this != &other) {
         for (int i = 0; i < 4; ++i) {

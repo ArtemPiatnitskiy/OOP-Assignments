@@ -14,8 +14,10 @@ class Rectangle : public Figure {
 
         // Перегрузка операторов = копирования и перемещения.
         // Конструктор копирования.
+        Rectangle(const Rectangle& other);
         Rectangle& operator=(const Rectangle& other);
         // Конструктор перемещения.
+        Rectangle(Rectangle&& other) noexcept;
         Rectangle& operator=(Rectangle&& other) noexcept;
 
         // Перегрузка оператора сравниния ==.
