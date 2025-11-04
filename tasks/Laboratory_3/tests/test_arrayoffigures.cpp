@@ -63,6 +63,31 @@ TEST(ArrayOfFiguresAll, AddFiguresAndTotalSquareAndIndexing) {
     EXPECT_THROW({ Figure* ff = arr[3]; (void)ff; }, std::out_of_range);
 }
 
+// Тест удалния фигуры по индексу
+TEST(ArrayOfFiguresAll, RemoveFigureByIndex) {
+        ArrayOfFigures arr(1);
+    // добавляем прямоугольник (12) и ромб (2)
+    arr.add_figure(make_rect());
+    arr.add_figure(make_rhombus());
+    EXPECT_EQ(arr.get_size(), 2u);
+    // суммарная площадь 14
+    EXPECT_NEAR(arr.total_square(), 14.0, EPS);
+
+    // удаляем ромб
+    arr.remove_figure(1);
+    EXPECT_EQ(arr.get_size(), 1u);
+    EXPECT_NEAR(arr.total_square(), 12.0, EPS);
+    // удаляем и пытаемся удалить за границей
+    arr.remove_figure(0);
+    EXPECT_EQ(arr.get_size(), 0u);
+    EXPECT_THROW({ arr.remove_figure(1); }, std::out_of_range);
+
+    arr.add_figure(make_trap());
+    EXPECT_EQ(arr.get_size(), 1u);
+    EXPECT_NEAR(arr.total_square(), 2.5, EPS);
+    EXPECT_THROW({ arr.remove_figure(5); }, std::out_of_range);
+}
+
 // Тест автоматического ресайза (capacity удваивается)
 TEST(ArrayOfFiguresAll, ResizeOnAdd) {
     ArrayOfFigures arr(1); // capacity -> 2

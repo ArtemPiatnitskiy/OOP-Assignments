@@ -112,7 +112,7 @@ Figure*& ArrayOfFigures::operator[](size_t index) {
 
 // Функция для удаления фигуры из массива по индексу.
 void ArrayOfFigures::remove_figure(size_t index) {
-    if (index < size) {
+    if (index >= size) {
         throw std::out_of_range("Index out of range");
     }
     delete figures[index]; // Освобождение памяти под фигуру.
