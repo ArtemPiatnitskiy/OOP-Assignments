@@ -24,7 +24,10 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 
-add_library(${PROJECT_NAME}_lib src/figure.cpp src/point.cpp src/arrayoffigures.cpp src/rectangle.cpp src/trapezoid.cpp src/rhombus.cpp)
+# Библиотека реализована в заголовочных файлах (header-only).
+# Создаём интерфейсную цель, которая передаёт include-путь и опции потребителям.
+add_library(${PROJECT_NAME}_lib INTERFACE)
+target_include_directories(${PROJECT_NAME}_lib INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME}_exe main.cpp)
 
 target_link_libraries(${PROJECT_NAME}_exe PRIVATE ${PROJECT_NAME}_lib)
@@ -34,31 +37,31 @@ enable_testing()
 
 # Тесты для класса Point
 add_executable(test_point_${PROJECT_NAME} tests/test_point.cpp)
-target_link_libraries(test_point_${PROJECT_NAME} ${PROJECT_NAME}_lib gtest_main)
+target_link_libraries(test_point_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
 
 add_test(NAME Laboratory_4_tests_point COMMAND test_point_${PROJECT_NAME})
 
-# Тесты для класса Rectangle
-add_executable(test_rectangle_${PROJECT_NAME} tests/test_rectangle.cpp)
-target_link_libraries(test_rectangle_${PROJECT_NAME} ${PROJECT_NAME}_lib gtest_main)
+# Тесты для класса Hexagon
+add_executable(test_hexagon_${PROJECT_NAME} tests/test_hexagon.cpp)
+target_link_libraries(test_hexagon_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
 
-add_test(NAME Laboratory_4_tests_rectangle COMMAND test_rectangle_${PROJECT_NAME})
+add_test(NAME Laboratory_4_tests_hexagon COMMAND test_hexagon_${PROJECT_NAME})
 
 
 # Тесты для класса Rhombus
 add_executable(test_rhombus_${PROJECT_NAME} tests/test_rhombus.cpp)
-target_link_libraries(test_rhombus_${PROJECT_NAME} ${PROJECT_NAME}_lib gtest_main)
+target_link_libraries(test_rhombus_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
 
 add_test(NAME Laboratory_4_tests_rhombus COMMAND test_rhombus_${PROJECT_NAME})
 
 # Тесты для класса Trapezoid
-add_executable(test_trapezoid_${PROJECT_NAME} tests/test_trapezoid.cpp)
-target_link_libraries(test_trapezoid_${PROJECT_NAME} ${PROJECT_NAME}_lib gtest_main)
+add_executable(test_pentagon_${PROJECT_NAME} tests/test_pentagon.cpp)
+target_link_libraries(test_pentagon_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
 
-add_test(NAME Laboratory_4_tests_trapezoid COMMAND test_trapezoid_${PROJECT_NAME})
+add_test(NAME Laboratory_4_tests_pentagon COMMAND test_pentagon_${PROJECT_NAME})
 
 # Тесты для класса ArrayOfFigures
 add_executable(test_arrayoffigures_${PROJECT_NAME} tests/test_arrayoffigures.cpp)
-target_link_libraries(test_arrayoffigures_${PROJECT_NAME} ${PROJECT_NAME}_lib gtest_main)
+target_link_libraries(test_arrayoffigures_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
 
 add_test(NAME Laboratory_4_tests_arrayoffigures COMMAND test_arrayoffigures_${PROJECT_NAME})

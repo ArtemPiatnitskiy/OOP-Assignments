@@ -12,9 +12,8 @@
 
 
 template<class Figure>
-// is_default_constructible_v проверяет, что класс Figure имеет конструктор по умолчанию и сразу возвращает значение true или false.
-// Если класс Figure не имеет конструктора по умолчанию, то при попытке создать объект ArrayOfFigures<Figure> будет ошибка компиляции.
-concept Arrayable = std::is_default_constructible_v<Figure>;
+// Концепт проверяет, что Figure - это класс или структура
+concept Arrayable = std::is_class_v<Figure>;
 
 template<Arrayable Figure>
 class ArrayOfFigures {
@@ -125,10 +124,10 @@ class ArrayOfFigures {
 
         // Функция для удаления фигуры из массива по индексу.
         void remove_figure(size_t index) {
-            if (index < size) {
+            if (index >= size) {
                 throw std::out_of_range("Index out of range");
             }
-            delete figures[index]; // Освобождение памяти под фигуру.
+            figures[index].reset(); // Освобождение shared_ptr.
             for (size_t i = index; i < size - 1; ++i) {
                 figures[i] = figures[i + 1]; // Сдвиг элементов влево.
             }
