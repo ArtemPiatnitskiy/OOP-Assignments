@@ -7,10 +7,16 @@
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
+#include <type_traits>
 #include <utility>
 
 
-template<typename Figure>
+template<class Figure>
+// is_default_constructible_v проверяет, что класс Figure имеет конструктор по умолчанию и сразу возвращает значение true или false.
+// Если класс Figure не имеет конструктора по умолчанию, то при попытке создать объект ArrayOfFigures<Figure> будет ошибка компиляции.
+concept Arrayable = std::is_default_constructible_v<Figure>;
+
+template<Arrayable Figure>
 class ArrayOfFigures {
     public:
         // Конструктор по умолчанию.

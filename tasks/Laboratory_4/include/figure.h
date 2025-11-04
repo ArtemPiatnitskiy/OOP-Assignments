@@ -6,7 +6,8 @@
 #include <string>
 #include <ostream>
 
-template<Scalar T> class Figure {
+template<Scalar T> 
+class Figure {
     // Функция перегрузки оператора вывода. Является friend функций, чтобы иметь доступ к приватным членам классса.
     // Функция будет возвращать ссылку на поток вывода для возможности цепочки выводов.
     // Пример использования:
@@ -48,7 +49,7 @@ template<Scalar T> class Figure {
         // Функция для нахождения периметра фигуры.
         virtual double perimeter() const = 0;
 
-        virtual Figure* clone() const = 0;
+        virtual std::shared_ptr<Figure<T>> clone() const = 0;
 
         virtual operator double() const = 0;
 

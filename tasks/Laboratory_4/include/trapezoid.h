@@ -3,6 +3,8 @@
 #include "point.h"
 #include "figure.h"
 
+
+template<Scalar T>
 class Trapezoid : public Figure {
     public:
         // Конструктор по умолчанию.

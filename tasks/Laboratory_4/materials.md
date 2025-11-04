@@ -66,8 +66,6 @@ std::copyable<T>              // Тип может быть скопирован
 std::default_constructible<T> // Тип может быть создан по умолчанию
 ```
 
-
-
 ### Концепции vs SFINAE
 
 ```cpp
@@ -99,8 +97,6 @@ template<typename T>
 requires std::is_arithmetic_v<T> && std::copyable<T>
 void function(T value) { /* ... */ }
 ```
-
-
 
 # CRTP - Паттерн CRTP (Curiously Recurring Template Pattern)
 
@@ -151,3 +147,74 @@ class Base {    // ...
 // CRTP - быстрее, нет накладных расходов
 // Виртуальные функции - медленнее, есть накладные расходы
 ```
+
+
+
+
+
+
+
+В C++ такие конструкции, как `std::is_default_constructible<T>`, — это **type traits** (типовые характеристики), то есть шаблонные структуры, которые позволяют на этапе компиляции узнать свойства типа `T`.
+
+Пример:
+
+`std::is_default_constructible<int>`
+
+— это **не** булево значение, а **тип**, у которого есть внутреннее статическое поле `value`.
+
+---
+
+### 📙 Что такое `::value`
+
+`std::is_default_constructible<T>` — это структура, определённая примерно так:
+
+`template <typename T> struct is_default_constructible {    static constexpr bool value = /* true или false */; };`
+
+То есть у неё есть **статическое константное поле `value`**, которое содержит результат проверки (`true` или `false`).
+
+---
+
+### 📗 Почему нужно писать `::value`
+
+Когда ты пишешь:
+
+`std::is_default_constructible<Figure>`
+
+— ты обращаешься к **типу** (структуре), а не к значению.  
+Чтобы получить **само значение** (булево `true` или `false`), нужно обратиться к полю:
+
+`std::is_default_constructible<Figure>::value`
+
+Тогда это выражение имеет тип `bool`.
+
+---
+
+### 📘 Пример
+
+`#include <type_traits> #include <iostream>  struct A {};               // имеет конструктор по умолчанию struct B { B(int) {} };    // не имеет конструктора по умолчанию  int main() {     std::cout << std::is_default_constructible<A>::value << "\n"; // 1 (true)     std::cout << std::is_default_constructible<B>::value << "\n"; // 0 (false) }`
+
+---
+
+### 📗 Упрощённый синтаксис
+
+В C++17 и новее можно писать короче, с `_v`:
+
+`std::is_default_constructible_v<Figure>`
+
+Это эквивалентно `std::is_default_constructible<Figure>::value`, просто синтаксический сахар.
+
+---
+
+✅ **Итого:**
+
+| Что написано                                   | Что это значит                   | Тип    |
+| ---------------------------------------------- | -------------------------------- | ------ |
+| `std::is_default_constructible<Figure>`        | Структура (тип-трейт)            | тип    |
+| `std::is_default_constructible<Figure>::value` | Булево значение (`true`/`false`) | `bool` |
+| `std::is_default_constructible_v<Figure>`      | Укороченная форма (`C++17+`)     | `bool` |
+
+---
+
+Хочешь, я покажу, как можно использовать это в `concept`, например:
+
+`template<typename T> concept Arrayable = std::is_default_constructible_v<T>;`

@@ -107,14 +107,14 @@ cmake --build .
 **Запуск:**
 
 ```bash
-./Laboratory_3.exe
+./Laboratory_4.exe
 ```
 
 ## Запуск тестов:
 
 ```bash
 # Из директории build/tasks/Laboratory_2
-./Laboratory_3_test
+./Laboratory_4_test
 
 # Или через CTest
 ctest --verbose
