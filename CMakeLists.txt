@@ -8,5 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(tasks/Laboratory_1)
 add_subdirectory(tasks/Laboratory_3)
 add_subdirectory(tasks/Laboratory_4)
+add_subdirectory(tasks/Laboratory_5)
 
 enable_testing()
