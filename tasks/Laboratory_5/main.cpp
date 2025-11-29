@@ -278,8 +278,8 @@
 #include "include/doubly_linked_list.h"
 #include <iostream>
 #include <string>
-#include <algorithm>
-#include <numeric>
+#include <chrono>
+#include <list>
 
 struct color {
     std::string name;
@@ -289,8 +289,69 @@ struct color {
         : name(n), r(red), g(green), b(blue) {}
 };
 
+
+void test_standard_allocator() {
+    std::cout << "Test standard allocator\n";
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    std::list<color> standard_list;
+
+    const int TEST_SIZE = 50000; // Уменьшаем для сопоставимости
+    
+    for (int i = 0; i < TEST_SIZE; ++i) {
+        standard_list.push_back(color("Color" + std::to_string(i), i, i, i));
+    }
+
+    for (int i = 0; i < TEST_SIZE; ++i) {
+        standard_list.erase(standard_list.begin());
+    }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    std::cout << "Standard allocator time: " << duration << " ms (tested with " << TEST_SIZE << " elements)\n";
+
+}
+
+void test_custom_allocator() {
+    std::cout << "Test custom allocator\n";
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+
+    // Увеличиваем пул до 512 MB (строки занимают много места!)
+    fixed_block_memory_resource mr(1024ULL * 1024 * 512);
+    doubly_linked_list<color> custom_list(&mr);
+
+    const int TEST_SIZE = 50000; // Уменьшаем до 50k для разумного времени теста
+    
+    for (int i = 0; i < TEST_SIZE; ++i) {
+        custom_list.push_back(color("Color" + std::to_string(i), i, i, i));
+    }
+
+    for (int i = 0; i < TEST_SIZE; ++i) {
+        custom_list.pop_front();
+    }
+
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    std::cout << "Custom allocator time: " << duration << " ms (tested with " << TEST_SIZE << " elements)\n";
+
+}
+
 int main() {
     fixed_block_memory_resource mr(4096);
+
+       
+    
+    doubly_linked_list<int> list(&mr);
+    
+    list.push_back(10);
+    list.pop_back();
+    
+    mr.print_allocated_blocks();
+    
+    std::cout << "\n==============================================\n";
+    
     doubly_linked_list<color> colors(&mr);
 
     colors.push_back(color("Red", 255, 0, 0));
@@ -307,6 +368,11 @@ int main() {
     // Без фигурных/без круглых скобок это объявление функции (most-vexing-parse).
     // Создаём объект с дефолтным конструктором:
     fixed_block_memory_resource mr_2{};
+
+    std::cout << "\n==============================================\n";
+
+    mr_2.print_allocated_blocks();
+
     doubly_linked_list<void*> list_2(&mr_2);
 
     for (int i = 0; i < 100; ++i) {
@@ -318,8 +384,18 @@ int main() {
 
     list_2.print_list();
 
-    std::cout << "==============================================\n";
+    std::cout << "\n==============================================\n";
+
+    mr_2.print_allocated_blocks();
     
+    std::cout << "\n==============================================\n";
+
+    list_2.clear();
+    mr_2.print_allocated_blocks();
+
+    test_standard_allocator();
+    test_custom_allocator();
+
 
     return 0;
 }
