@@ -1,0 +1,5 @@
+Bear Mishka 100 200
+Bittern Vypochka 150 250
+Desman Vyhuhol 50 75
+Bear Potap 200 300
+Bittern BirdSong 400 450

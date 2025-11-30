@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(Laboratory_5)
+project(Laboratory_6)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Добавление опций компиляции
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=maybe-uninitialized")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 # Установка Google Test
 include(FetchContent)
@@ -23,7 +23,13 @@ FetchContent_MakeAvailable(googletest)
 
 # Исходные файлы
 set(SOURCES
-    src/fixed_block_memory_resource.cpp
+    src/npc.cpp
+    src/bear.cpp
+    src/bittern.cpp
+    src/desman.cpp
+    src/factory.cpp
+    src/arena.cpp
+    src/combat_visitor.cpp
 )
 
 # Библиотека
@@ -34,25 +40,41 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR
 add_executable(${PROJECT_NAME}_exe main.cpp)
 target_link_libraries(${PROJECT_NAME}_exe PRIVATE ${PROJECT_NAME}_lib)
 
+# Тестовая программа для демонстрации загрузки из файла
+add_executable(${PROJECT_NAME}_test_demo test_main.cpp)
+target_link_libraries(${PROJECT_NAME}_test_demo PRIVATE ${PROJECT_NAME}_lib)
+
 # Добавление тестов
 enable_testing()
 
-# Тесты для memory_resource
-add_executable(test_memory_resource tests/test_memory_resource.cpp)
-target_link_libraries(test_memory_resource PRIVATE ${PROJECT_NAME}_lib gtest_main)
-add_test(NAME Laboratory_5_tests_memory_resource COMMAND test_memory_resource)
+# Тесты для NPC
+add_executable(test_npc tests/test_npc.cpp)
+target_link_libraries(test_npc PRIVATE ${PROJECT_NAME}_lib gtest_main)
+add_test(NAME Laboratory_6_test_npc COMMAND test_npc)
 
-# Тесты для doubly_linked_list
-add_executable(test_doubly_linked_list tests/test_doubly_linked_list.cpp)
-target_link_libraries(test_doubly_linked_list PRIVATE ${PROJECT_NAME}_lib gtest_main)
-add_test(NAME Laboratory_5_tests_doubly_linked_list COMMAND test_doubly_linked_list)
+# Тесты для Factory
+add_executable(test_factory tests/test_factory.cpp)
+target_link_libraries(test_factory PRIVATE ${PROJECT_NAME}_lib gtest_main)
+add_test(NAME Laboratory_6_test_factory COMMAND test_factory)
 
-# Тесты для структур
-add_executable(test_struct tests/test_struct.cpp)
-target_link_libraries(test_struct PRIVATE ${PROJECT_NAME}_lib gtest_main)
-add_test(NAME Laboratory_5_tests_struct COMMAND test_struct)
+# Тесты для Arena
+add_executable(test_arena tests/test_arena.cpp)
+target_link_libraries(test_arena PRIVATE ${PROJECT_NAME}_lib gtest_main)
+add_test(NAME Laboratory_6_test_arena COMMAND test_arena)
 
-# Тесты для итератора
-add_executable(test_iterator_${PROJECT_NAME} tests/test_iterator.cpp)
-target_link_libraries(test_iterator_${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib gtest_main)
-add_test(NAME Laboratory_5_tests_iterator COMMAND test_iterator_${PROJECT_NAME})
+# Тесты для Combat
+add_executable(test_combat tests/test_combat.cpp)
+target_link_libraries(test_combat PRIVATE ${PROJECT_NAME}_lib gtest_main)
+add_test(NAME Laboratory_6_test_combat COMMAND test_combat)
+
+# Тесты для загрузки файлов
+add_executable(test_file_loading tests/test_file_loading.cpp)
+target_link_libraries(test_file_loading PRIVATE ${PROJECT_NAME}_lib gtest_main)
+add_test(NAME Laboratory_6_test_file_loading COMMAND test_file_loading)
+
+# Копируем тестовые файлы в директорию сборки
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_data_npcs.txt
+    ${CMAKE_CURRENT_BINARY_DIR}/test_data_npcs.txt
+    COPYONLY
+)

@@ -9,5 +9,6 @@ add_subdirectory(tasks/Laboratory_1)
 add_subdirectory(tasks/Laboratory_3)
 add_subdirectory(tasks/Laboratory_4)
 add_subdirectory(tasks/Laboratory_5)
+add_subdirectory(tasks/Laboratory_6)
 
 enable_testing()
