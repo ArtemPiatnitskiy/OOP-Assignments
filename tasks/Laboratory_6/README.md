@@ -58,16 +58,42 @@
 ## Структура проекта
 
 ```
-tasks/Laboratory_5/
+tasks/Laboratory_6/
 ├── CMakeLists.txt
 ├── main.cpp
+├── test_main.cpp
 ├── README.md
+├── materials.md
+│
 ├── include/
-│   
-│   
+│ ├── npc.h
+│ ├── bear.h
+│ ├── bittern.h
+│ ├── desman.h
+│ ├── factory.h
+│ ├── arena.h
+│ ├── visitor.h
+│ ├── combat_visitor.h
+│ ├── observer.h
+│ ├── console_observer.h
+│ └── file_observer.h
+│
 ├── src/
-│   
+│ ├── npc.cpp
+│ ├── bear.cpp
+│ ├── bittern.cpp
+│ ├── desman.cpp
+│ ├── factory.cpp
+│ ├── arena.cpp
+│ └── combat_visitor.cpp
+│
 └── tests/
+├── Laboratory_6_test_npc.cpp
+├── Laboratory_6_test_factory.cpp
+├── Laboratory_6_test_arena.cpp
+├── Laboratory_6_test_combat.cpp
+├── Laboratory_6_test_file_loading.cpp
+└── test_data_npcs.txt
 ```
 
 ## Сборка и запуск проекта
