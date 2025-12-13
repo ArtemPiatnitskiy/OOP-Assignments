@@ -115,7 +115,7 @@ cmake --build .
 **Запуск:**
 
 ```bash
-./Laboratory_6.exe
+./Laboratory_6
 ```
 
 ## Запуск тестов:
