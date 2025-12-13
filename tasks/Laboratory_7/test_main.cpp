@@ -11,7 +11,7 @@ int main() {
         std::cout << std::endl;
 
         // Создаём арену
-        Arena arena(500, 500);
+        Arena arena(100, 100);
 
         // Добавляем наблюдателей
         auto consoleObserver = std::make_shared<ConsoleObserver>();

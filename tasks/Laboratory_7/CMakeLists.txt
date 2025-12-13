@@ -39,10 +39,14 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} PRIVATE ${PROJECT_NAME}_lib)
 
-# Тестовая программа (если нужна)
+# Тестовая программа
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp)
     add_executable(${PROJECT_NAME}_test_demo test_main.cpp)
     target_link_libraries(${PROJECT_NAME}_test_demo PRIVATE ${PROJECT_NAME}_lib)
+    
+    # Копирование тестовых файлов
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/test_npcs.txt 
+                   ${CMAKE_CURRENT_BINARY_DIR}/test_npcs.txt COPYONLY)
 endif()
 
 # Добавление тестов
