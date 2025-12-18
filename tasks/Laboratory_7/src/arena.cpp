@@ -166,7 +166,6 @@ void Arena::startBattle(double range) {
     }
 }
 
-// ===== Новые методы для многопоточности =====
 
 void Arena::generateRandomNpcs(int count) {
     std::random_device rd;
@@ -270,7 +269,7 @@ bool Arena::isValidPosition(int x, int y) const {
     return x >= 0 && x <= width_ && y >= 0 && y <= height_;
 }
 
-// ===== Потоковые функции =====
+// Потоковые функции
 
 void Arena::movementThreadFunc() {
     std::random_device rd;
